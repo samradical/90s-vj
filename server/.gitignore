@@ -1,0 +1,8 @@
+dist/*
+src/images/cards/*
+src/images/items/*
+src/images/panos/*
+src/images/full/*
+src/videos/*
+src/audio/*
+node_modules
