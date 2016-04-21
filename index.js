@@ -14,7 +14,9 @@ import Midi from './midi/midi';
 const PLAY_VJ = "PLOnhHR5nulMPisi4X15rmPpEVp2Q-MIY0";
 const MOON_P = "PLBm5UHsvUTFoHiOgZl8Ycn7Y3XySDSXuV";
 const nineties = "PLRQ2jIXShfkZnWUXZj1Auc30pX_d4M6j7";
+const nineties2 = "PLRQ2jIXShfkZ1EI9plH-0v8r5XqtuJSqJ";
 const ninetiesevents = "PLRQ2jIXShfkaQoRXUilaQB3CVdqprTtvH";
+const ninetiesevents2 = "PLRQ2jIXShfkY86JFB8kScjCKS3SVVoCJ6";
 
 var appEl = document.getElementById('app')
 var threeEl = document.getElementById('three')
@@ -56,17 +58,17 @@ function init() {
         autoUpdate: false,
         mediaSources: [{
             i: 0,
-            playlists: [PLAY_VJ],
+            playlists: [nineties2],
             shufflePlaylist: true,
             maxVideoTime: 15,
             quality: {
                 chooseBest: true,
                 resolution: '360p'
             },
-            verbose: false
+            verbose: true
         }, {
             index: 1,
-            playlists: [PLAY_VJ],
+            playlists: [ninetiesevents2],
             shufflePlaylist: true,
             maxVideoTime: 15,
             paused: false,
@@ -74,16 +76,16 @@ function init() {
                 chooseBest: true,
                 resolution: '360p'
             },
-            verbose: false
+            verbose: true
         }]
     });
 
-    renderer = new VjRenderer(threeEl);
+    //renderer = new VjRenderer(threeEl);
 
-    renderer.setTextures([
-        vj.getCanvasAt(0),
-        vj.getCanvasAt(1)
-    ]);
+    // renderer.setTextures([
+    //     vj.getCanvasAt(0),
+    //     vj.getCanvasAt(1)
+    // ]);
 
     update()
 
@@ -114,11 +116,11 @@ function init() {
 
 function update() {
     vj.update();
-    renderer.update();
+   // renderer.update();
     window.requestAnimationFrame(update);
 }
 
 
 
 
-//window.onload = init
+window.onload = init

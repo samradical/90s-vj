@@ -6,7 +6,8 @@ import EaseNumbers from './utils/ease-numbers';
 //import FxComposer from './vj-fx-layer';
 import ControlPerameters from './vj-control-perameters';
 //import ServerServise from 'serverService';
- import FxLayer from './vj-fx-layer';
+import FxLayer from './vj-fx-layer';
+//import BlendModes from './vj-fx-layer';
 // import MoonLayer from './vj-moon-layer';
 // import ShapeLayer from './vj-shape-layer';
 // import TextCanvas from './vj-text-layer';
@@ -70,31 +71,48 @@ class Renderer {
 			stencilBuffer: false
 		};
 
-		// this.fbo = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetParameters);
-		// this.fbo.texture.minFilter = THREE.LinearFilter;
-		// this.fbo.texture.magFilter = THREE.LinearFilter;
+		this.fbo = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, renderTargetParameters);
+		this.fbo.texture.minFilter = THREE.LinearFilter;
+		this.fbo.texture.magFilter = THREE.LinearFilter;
 
 		var renderPass = new THREE.RenderPass(this.scene, this.camera);
 		var effectCopy = new THREE.ShaderPass(Shaders.copy, this.camera);
+		this.composer = new THREE.EffectComposer(this.renderer, this.fbo);
 
-		let chroma = ShaderLib['blendMoon']();
-		let shader = chroma['shader'];
-		this.uniforms = chroma['uniforms'];
-		//this.uniforms['uMixRatio'].value = 0.8;
-		//this.uniforms['uThreshold'].value = 0.15;
-		this.uniforms['blendMode'].value = 15;
-		this.uniforms['background'].value = this.layer2.fbo;
-		this.uniforms['foreground'].value = this.layer1.fbo;
-		//this.uniforms['tTwo'].value = this.shapeLayer.fbo;
-		//this.uniforms['tMix'].value = this.shapeLayer.fbo;
+		this.blendPass = new THREE.ShaderPass(Shaders.blendMoon, this.camera);
+    	this.blendPass.uniforms['blendMode'].value = 15;
+    	this.blendPass.uniforms['background'].value = this.layer2.fbo;
+    	this.blendPass.uniforms['foreground'].value = this.layer1.fbo;
 
-		let parameters = {
-			fragmentShader: shader.fragmentShader,
-			vertexShader: shader.vertexShader,
-			uniforms: this.uniforms
-		};
+    	this.composer.addPass(renderPass);
+	    this.composer.addPass(this.blendPass);
+	    //this.composer.addPass(this.shapePass);
+	    //  this.composer.addPass(this.rayPass);
+	    //this.composer.addPass(this.textPass);
+	    this.composer.addPass(effectCopy);
 
-		let videoMaterial = new THREE.ShaderMaterial(parameters);
+		// let chroma = ShaderLib['blendMoon']();
+		// let shader = chroma['shader'];
+		// this.uniforms = chroma['uniforms'];
+		// //this.uniforms['uMixRatio'].value = 0.8;
+		// //this.uniforms['uThreshold'].value = 0.15;
+		// this.uniforms['blendMode'].value = 15;
+		// this.uniforms['background'].value = this.layer2.fbo;
+		// this.uniforms['foreground'].value = this.layer1.fbo;
+		// //this.uniforms['tTwo'].value = this.shapeLayer.fbo;
+		// //this.uniforms['tMix'].value = this.shapeLayer.fbo;
+
+		// let parameters = {
+		// 	fragmentShader: shader.fragmentShader,
+		// 	vertexShader: shader.vertexShader,
+		// 	uniforms: this.uniforms
+		// };
+
+		// let videoMaterial = new THREE.ShaderMaterial(parameters);
+		let videoMaterial = new THREE.MeshBasicMaterial({
+	      map: this.fbo
+	      //color:0xff0000
+	    });
 
 		let quadgeometry = new THREE.PlaneBufferGeometry(VIDEO_WIDTH, VIDEO_HEIGHT, 2, 2);
 		this.mesh = new THREE.Mesh(quadgeometry, videoMaterial);
@@ -112,19 +130,20 @@ class Renderer {
 	}
 
 	update() {
-		this._controlUniforms();
+		this._controlBlendUniforms();
 		//this._audioUniforms();
 		this._threeRender();
 		this.time++;
 	}
 
-	_controlUniforms(){
+	_controlBlendUniforms(){
 		for (var i = 0; i < this.controlKeysLength; i++) {
 			let _key = this.controlKeys[i]
 			let _newVal = this.controls[_key].value
-			let _val = this.uniforms[_key].value
+			let _val = this.blendPass.uniforms[_key].value
 			if(_val !== _newVal && _newVal !== undefined){
-				this.uniforms[_key].value = _newVal
+				console.log("renderer" , _key );
+				this.blendPass.uniforms[_key].value = _newVal
 			}
 		}
 	}
@@ -156,7 +175,7 @@ class Renderer {
 	_threeRender() {
 		this.layer1.render();
 		this.layer2.render();
-		//this.composer.render();
+		this.composer.render();
 		//this.rayPass.uniforms['u_time'].value = this.time;
 		this.renderer.render(this.scene, this.camera, null, true);
 	}

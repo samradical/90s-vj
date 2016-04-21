@@ -24,7 +24,6 @@ const Midi = (() => {
                 onPressNote: (evt) => {
                     let _midikey = evt[1];
                     let _val = evt[2];
-                    console.log(evt);
                     this.map[_midikey].value = Utils.map(_val, 0, 127, 0, 1)
 
                     for (var i = 0; i < this.buttonsLength; i++) {

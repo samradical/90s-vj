@@ -58,6 +58,9 @@ class VideoCanvas{
 
 	_init(){
 		this.frameBuffer = this._createCanvas(W, H);
+		if(this.options.verbose){
+			document.body.appendChild(this.frameBuffer)
+		}
 		this.bufferCtx = this.frameBuffer.getContext("2d");
 	}
 
