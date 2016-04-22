@@ -32,43 +32,58 @@ function init() {
         blendOpacity: Midi.map[13]
     }
 
+    ControlPerameters.video = {
+        stepBack: Midi.map[17]
+    }
+
     ControlPerameters.sources = [{
         color: {
-            uSaturation: Midi.map[11],
+            uSaturation: Midi.map[14],
             uR: Midi.map[3],
             uG: Midi.map[4],
             uB: Midi.map[5],
             uBrightness: 0.01,
             uContrast: Midi.map[0],
             uHue: Midi.map[6],
+        },
+        canvas:{
+            rewind:Midi.map[11]
         }
     }, {
+        video:{
+            back:Midi.map[6],
+            forward:Midi.map[7]
+        },
         color: {
-            uSaturation: Midi.map[2],
+            uSaturation: Midi.map[15],
             uR: Midi.map[10],
             uG: Midi.map[8],
             uB: Midi.map[9],
             uBrightness: 0.01,
             uContrast: Midi.map[12],
             uHue: Midi.map[9],
+        },
+        canvas:{
+            rewind:Midi.map[2]
         }
     }]
 
     vj = new VJManager(appEl, {
         autoUpdate: false,
         mediaSources: [{
-            i: 0,
-            playlists: [nineties2],
+            index: 0,
+            playlists: [nineties],
             shufflePlaylist: true,
             maxVideoTime: 15,
             quality: {
                 chooseBest: true,
                 resolution: '360p'
             },
-            verbose: true
+            rewindable: true,
+            verbose: false
         }, {
             index: 1,
-            playlists: [ninetiesevents2],
+            playlists: [ninetiesevents],
             shufflePlaylist: true,
             maxVideoTime: 15,
             paused: false,
@@ -76,16 +91,17 @@ function init() {
                 chooseBest: true,
                 resolution: '360p'
             },
-            verbose: true
+            rewindable: true,
+            verbose: false
         }]
     });
 
-    //renderer = new VjRenderer(threeEl);
+    renderer = new VjRenderer(threeEl);
 
-    // renderer.setTextures([
-    //     vj.getCanvasAt(0),
-    //     vj.getCanvasAt(1)
-    // ]);
+    renderer.setTextures([
+        vj.getCanvasAt(0),
+        vj.getCanvasAt(1)
+    ]);
 
     update()
 
@@ -116,7 +132,7 @@ function init() {
 
 function update() {
     vj.update();
-   // renderer.update();
+    renderer.update();
     window.requestAnimationFrame(update);
 }
 

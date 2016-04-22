@@ -18,13 +18,13 @@ class VjManager {
     this.mediaSourcesConfigs = options.mediaSources;
 
     this.mediaSources = [];
+    this.controls = [];
     this.videoCanvases = [];
     this.playlists = [];
 
     this.parent = parent;
     this.boundUpdate = this._update.bind(this);
     this.mediaSourcesLength = this.mediaSourcesConfigs.length
-    console.log(ControlPerameters);
     _.each(this.mediaSourcesConfigs,(mediaPlayers)=>{
         let _o = _.assign(mediaPlayers, {
         readySignal: new Signals(),
@@ -43,6 +43,23 @@ class VjManager {
       })
     })
 
+    Emitter.on(`source0Video`, (direction)=>{
+      if(direction === 'down'){
+        this.mediaSources[0].stepBack(5 * ControlPerameters.video.stepBack.value)
+      }else{
+        this.mediaSources[0].stepForward(5 * ControlPerameters.video.stepBack.value)
+      }
+    })
+
+    Emitter.on(`source1Video`, (direction)=>{
+      if(direction === 'down'){
+        this.mediaSources[1].stepBack(5 * ControlPerameters.video.stepBack.value)
+      }else{
+        this.mediaSources[1].stepForward(5 * ControlPerameters.video.stepBack.value)
+      }
+    })
+
+
     this._update();
   }
 
@@ -55,6 +72,7 @@ class VjManager {
       if(!options.paused){
         el.setAttribute('autoplay', 'true');
       }
+      this.controls[options.index] = ControlPerameters.sources[options.index]
       this.mediaSources.push(new VjMediaSource(el, options));
       this.videoCanvases.push(new VjVideoCanvas(el, options));
       this.playlists.push(new VjPlaylist(this.mediaSources[this.mediaSources.length-1], options));

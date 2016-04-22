@@ -132,7 +132,7 @@
  	texel = changeSaturation(texel, uSaturation * uMaxSaturation);
  	texel = Desaturate(texel, uDesaturate);
 
- 	texel = (texel - 0.5) * (uContrast * uMaxContrast) + 0.5;
+ 	texel = (texel - 0.5) * (uContrast * uMaxContrast + 1.0) + 0.5;
  	texel = texel + uBrightness;
 
  	texel = toHue(texel, uHue * TAU);

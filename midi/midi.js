@@ -1,6 +1,8 @@
 import MidiInterface from './midi_controller'
 import MidiMap from './midi_map'
 import Utils from '../vj/utils/utils'
+import Emitter from '../vj/utils/emitter'
+
 const Midi = (() => {
     let midi;
 
@@ -15,6 +17,20 @@ const Midi = (() => {
                     value: 15,
                     min: 1,
                     max: 25
+                },
+                source0Video: {
+                    downId: 2,
+                    upId: 3,
+                    value: 15,
+                    min: -Infinity,
+                    max: Infinity
+                },
+                source1Video: {
+                    downId: 8,
+                    upId: 9,
+                    min: -Infinity,
+                    value: 15,
+                    max: Infinity
                 }
             }
             this.buttonKeys = Object.keys(this.buttons);
@@ -31,15 +47,17 @@ const Midi = (() => {
                         let _but = this.buttons[_key]
                         if (_but.downId === _midikey) {
                             _but.value--
+                            Emitter.emit(_key, 'down')
+                            if (_but.value < _but.min) {
+                                _but.value = _but.max
+                            }
                         }
                         if (_but.upId === _midikey) {
                             _but.value++
-                        }
-                        if (_but.value < _but.min) {
-                            _but.value = _but.max
-                        }
-                        if (_but.value > _but.max) {
-                            _but.value = _but.min
+                            Emitter.emit(_key, 'up')
+                            if (_but.value > _but.max) {
+                                _but.value = _but.min
+                            }
                         }
                     }
                 }

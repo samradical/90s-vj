@@ -147,6 +147,21 @@ class VjMediaSource {
 	//API
 	////-----------------
 
+	stepBack(amount){
+		let _target = this.videoElement.currentTime - amount
+		this.videoElement.currentTime = _target
+		console.log("back",_target);
+	}
+
+	stepForward(amount){
+		let _target = this.videoElement.currentTime + amount
+		if(_target > this.totalDuration){
+			_target = this.totalDuration - BUFFER_MARGIN
+		}
+		console.log("forward" ,_target);
+		this.videoElement.currentTime = _target
+	}
+
 	setPlaybackRate(rate){
 		this.videoElement.playbackRate = rate;
 	}
