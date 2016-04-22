@@ -23,9 +23,9 @@
     "signals": "*",
     "bluebird": "*",
     "jquery": "*",
-    "tween.js":"*",
-    "query-string":"*",
-    "isomorphic-fetch":"*",
+    "tween.js": "*",
+    "query-string": "*",
+    "isomorphic-fetch": "*",
     "glsl-easings": "^1.0.0",
     "three-orbit-viewer": "^69.3.0"
   },
@@ -38,6 +38,7 @@
     "budo": "^5.1.5",
     "garnish": "^3.2.1",
     "glslify": "^2.3.1",
+    "maximize.js": "^1.1.1",
     "uglify-js": "^2.4.21"
   },
   "scripts": {
@@ -56,7 +57,8 @@
   ],
   "browserify": {
     "transform": [
-      "babelify", "glslify"
+      "babelify",
+      "glslify"
     ]
   },
   "repository": {

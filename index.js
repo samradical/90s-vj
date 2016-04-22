@@ -3,6 +3,7 @@ import VJManager from './vj/vj-mediasource-manager';
 import ControlPerameters from './vj/vj-control-perameters';
 //import SocketIo from './vj/socket/socket';
 import dat from 'dat-gui';
+import maximize from 'maximize.js'
 
 import Midi from './midi/midi';
 //import Midi from './midi/midi_controller';
@@ -22,6 +23,8 @@ var appEl = document.getElementById('app')
 var threeEl = document.getElementById('three')
 var vj, renderer;
 
+maximize(appEl, appEl, ()=>{
+})
 
 
 function init() {
