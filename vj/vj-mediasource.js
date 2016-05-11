@@ -372,7 +372,6 @@ class VjMediaSource {
 		this.videoElement.currentTime = 0;
 		this.totalDuration = this.segDuration = this.playOffset = 0;
 	}
-
 }
 
 export default VjMediaSource;

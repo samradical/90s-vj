@@ -26,7 +26,7 @@ class VjManager {
     this.boundUpdate = this._update.bind(this);
     this.mediaSourcesLength = this.mediaSourcesConfigs.length
     _.each(this.mediaSourcesConfigs,(mediaPlayers)=>{
-        let _o = _.assign(mediaPlayers, {
+        let _o = _.merge(mediaPlayers, {
         readySignal: new Signals(),
         videoStartedSignal: new Signals(),
         endingSignal: new Signals(),
@@ -42,7 +42,7 @@ class VjManager {
         }
       })
     })
-
+    
     Emitter.on(`source0Video`, (direction)=>{
       if(direction === 'down'){
         this.mediaSources[0].stepBack(5 * ControlPerameters.video.stepBack.value)
@@ -111,6 +111,14 @@ class VjManager {
 
   getCanvasAt(index) {
     return this.videoCanvases[index].getCanvas();
+  }
+
+  getBuffersAt(index) {
+    return this.videoCanvases[index].getBuffers();
+  }
+
+  getVideoAt(index) {
+    return this.mediaSources[index].videoElement;
   }
 }
 

@@ -16,6 +16,8 @@ const colorFrag = glslify("./frag/color.frag")
 const saturationFrag = glslify("./frag/saturation.frag")
 const chromaFrag = glslify("./frag/chroma.frag")
 const chromaSimpleFrag = glslify("./frag/chroma_simple.frag")
+const chromaThreeFrag = glslify("./frag/chroma_three.frag")
+const shapeMix = glslify("./mixing/shape_mix.frag")
 const raymarchFrag = glslify("./frag/raymarch02.frag")
 const textStencilFrag = glslify("./frag/textStencil.frag")
 const shape1Frag = glslify("./frag/shape1.frag")
@@ -95,6 +97,36 @@ const Shaders = {
             }
         }]),
         fragmentShader: blendFrag,
+        vertexShader: basicVert
+    },
+    'shapeMix': {
+        uniforms: THREE.UniformsUtils.merge([{
+            "tOne": {
+                type: "t",
+                value: null
+            },
+            "tTwo": {
+                type: "t",
+                value: null
+            },
+            "uTime": {
+                type: "f",
+                value: 4.
+            },
+            "uModes": {
+                type: "i",
+                value: 0
+            },
+            "uSize": {
+                type: "f",
+                value: 0.5
+            },
+            "uIntensity": {
+                type: "f",
+                value: 0.5
+            }
+        }]),
+        fragmentShader: shapeMix,
         vertexShader: basicVert
     },
     'color': {
@@ -208,6 +240,32 @@ const Shaders = {
             }
         }]),
         fragmentShader: chromaSimpleFrag,
+        vertexShader: basicVert
+    },
+    'chromaThree': {
+        uniforms: THREE.UniformsUtils.merge([{
+            "uMixRatio": {
+                type: "f",
+                value: 0.5
+            },
+            "uThreshold": {
+                type: "f",
+                value: 0.5
+            },
+            "tDiffuse": {
+                type: "t",
+                value: null
+            },
+            "tTwo": {
+                type: "t",
+                value: null
+            },
+            "tMix": {
+                type: "t",
+                value: null
+            }
+        }]),
+        fragmentShader: chromaThreeFrag,
         vertexShader: basicVert
     },
     'raymarch': {

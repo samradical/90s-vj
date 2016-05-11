@@ -7,36 +7,36 @@
     "start": "node main.js"
   },
   "dependencies": {
-
-    "express": "^4.0.0",
-    "passport": "~0.1.17",
-    "passport-local": "~0.1.6",
-    "passport-twitter": "~1.0.2",
-    "passport-google-oauth": "~0.1.5",
-    "passport-spotify": "~0.3.0",
-    "passport-youtube-v3": "~1.0.0",
-    "connect-flash": "~0.1.1",
-    "connect-busboy": "latest",
     "bcrypt-nodejs": "latest",
-
-    "morgan": "~1.0.0",
+    "bluebird": "^3.2.1",
     "body-parser": "~1.0.0",
+    "connect-busboy": "latest",
+    "connect-flash": "~0.1.1",
     "cookie-parser": "~1.0.0",
-    "method-override": "~1.0.0",
-    "express-session": "~1.0.0",
-
-    "osc-receiver": "1.1.0",
+    "cors": "^2.7.1",
     "dotenv": "1.1.0",
+    "express": "^4.0.0",
+    "express-session": "~1.0.0",
     "ip": "1.0.1",
     "lodash": "^4.0.0",
+    "method-override": "~1.0.0",
+    "morgan": "~1.0.0",
     "multiparty": "^4.1.0",
-    "cors":"^2.7.1",
+    "node-youtube-dash-sidx": "^0.1.5",
+    "osc-receiver": "1.1.0",
+    "passport": "~0.1.17",
+    "passport-google-oauth": "~0.1.5",
+    "passport-local": "~0.1.6",
+    "passport-spotify": "~0.3.0",
+    "passport-twitter": "~1.0.2",
+    "passport-youtube-v3": "~1.0.0",
     "request": "^2.69.0",
-    "bluebird": "^3.2.1",
-    "yargs": "3.32.0",
     "socket.io": "1.4.4",
-    "x-ray":"^2.0.3",
-    "node-youtube-dash-sidx":"^0.1.5"
+    "tmp": "0.0.28",
+    "x-ray": "^2.0.3",
+    "yargs": "3.32.0"
   },
-  "engines": {"node": "~5.1.0"}
+  "engines": {
+    "node": "~5.1.0"
+  }
 }

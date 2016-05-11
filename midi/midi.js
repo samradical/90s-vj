@@ -19,15 +19,15 @@ const Midi = (() => {
                     max: 25
                 },
                 source0Video: {
-                    downId: 2,
-                    upId: 3,
+                    downId: 18,
+                    upId: 19,
                     value: 15,
                     min: -Infinity,
                     max: Infinity
                 },
                 source1Video: {
-                    downId: 8,
-                    upId: 9,
+                    downId: 26,
+                    upId: 27,
                     min: -Infinity,
                     value: 15,
                     max: Infinity
@@ -45,6 +45,7 @@ const Midi = (() => {
                     for (var i = 0; i < this.buttonsLength; i++) {
                         let _key = this.buttonKeys[i]
                         let _but = this.buttons[_key]
+                        console.log(_midikey);
                         if (_but.downId === _midikey) {
                             _but.value--
                             Emitter.emit(_key, 'down')

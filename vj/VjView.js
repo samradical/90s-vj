@@ -22,6 +22,8 @@ import VJManager from './vj-mediasource-manager';
 import VjRenderer from './vj-fx-renderer';
 import ControlPerameters from './vj-control-perameters';
 
+import Recorder from './recorder'
+
 const PLAY_VJ = "PLOnhHR5nulMPisi4X15rmPpEVp2Q-MIY0";
 const TRENDING_TODAY = "PLbpi6ZahtOH7h9OULR1AVb4i8zo0ctwEr";
 const MOON_P = "PLBm5UHsvUTFoHiOgZl8Ycn7Y3XySDSXuV";
@@ -76,6 +78,7 @@ class VjView extends Marionette.ItemView {
     }
 
     onShow() {
+        return
         this.vj = new VJManager(this.el, {
             count: 1,
             playlists: [MOON_P],
@@ -96,6 +99,10 @@ class VjView extends Marionette.ItemView {
 
         this.windowWidth = window.innerWidth;
         this.windowHeight = window.innerHeight;
+
+        this._recorder = new Recorder(this.ui.threeEl[0])
+        console.log(this._recorder);
+        this._recorder.start()
 
         //this.boundUpdate();
         //this.vj = new VJ(this.el, this.ui.threeEl[0]);

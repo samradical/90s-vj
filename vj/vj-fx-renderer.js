@@ -22,13 +22,20 @@ const VIDEO_WIDTH = 853;
 const VIDEO_HEIGHT = 480;
 //const FXComposer = require('three-fx-composer').FXComposer(THREE)
 
+/*
+OPTIONS
+record
+*/
 class Renderer {
-	constructor(parentEl) {
+	constructor(parentEl, options = {}) {
+		this.options = options
+
 		this.time = 0;
 		this.renderer = new THREE.WebGLRenderer({
-			antialias: false
+			antialias: false,
+			preserveDrawingBuffer: options.record || false
 		});
-		this.renderer.setSize(window.innerWidth, window.innerHeight);
+
 		parentEl.appendChild(this.renderer.domElement);
 
 		this._init();
@@ -46,19 +53,21 @@ class Renderer {
 	setTextures(textures) {
 
 		this.layer1 = new FxLayer(
-			textures[0],
+			textures[0][0],
 			this.renderer,
 			this.camera, {
 				index:0,
 				width: VIDEO_WIDTH,
+				texture:textures[0][1],
 				height: VIDEO_HEIGHT
 			});
 
 		this.layer2 = new FxLayer(
-			textures[1],
+			textures[1][0],
 			this.renderer,
 			this.camera, {
 				index:1,
+				texture:textures[1][1],
 				width: VIDEO_WIDTH,
 				height: VIDEO_HEIGHT
 			});
@@ -169,7 +178,12 @@ class Renderer {
 		this.layer1.resize(w, h, VIDEO_WIDTH, VIDEO_HEIGHT, scale);
 		this.layer2.resize(w, h, VIDEO_WIDTH, VIDEO_HEIGHT, scale);
 		this.mesh.scale.x = this.mesh.scale.y = scale;
-		this.renderer.setSize(cameraWidth, cameraHeight);
+
+		if(this.options.record){
+			this.renderer.setSize(VIDEO_WIDTH, VIDEO_HEIGHT);	
+		}else{
+			this.renderer.setSize(cameraWidth, cameraHeight);	
+		}
 	}
 
 	_threeRender() {
@@ -178,6 +192,10 @@ class Renderer {
 		this.composer.render();
 		//this.rayPass.uniforms['u_time'].value = this.time;
 		this.renderer.render(this.scene, this.camera, null, true);
+	}
+
+	get canvas(){
+		return this.renderer.domElement 
 	}
 }
 

@@ -1,5 +1,6 @@
 const W = 640;
 const H = 360;
+const MOD_FRAMES = 3;
 const BUFFER_LENGTH = 50;
 const REWIND_RECOVER = 200;
 
@@ -18,6 +19,8 @@ class VideoCanvas {
         this.windowW = window.innerWidth;
         this.windowH = window.innerHeight;
         this.containerRatio = W / H;
+
+        this.buffers = []
 
         this.rewindId;
         this.rewindValue = null
@@ -77,6 +80,13 @@ class VideoCanvas {
             document.body.appendChild(this.frameBuffer)
         }
         this.bufferCtx = this.frameBuffer.getContext("2d");
+		this.buffers.push(this.frameBuffer)
+		
+        if(this.options.rewindable){
+        	this.lastFrameBuffer = this._createCanvas(W, H);
+        	this.lastBufferCtx = this.lastFrameBuffer.getContext("2d");
+			this.buffers.push(this.lastFrameBuffer)
+        }
     }
 
     update() {
@@ -85,9 +95,11 @@ class VideoCanvas {
         }
 
         if(!this.rewindId){
+
 	        this.bufferCtx.clearRect(0, 0, this.windowW, this.windowH);
 	        this.bufferCtx.drawImage(this.videoElement, 0, 0, this.videoWidth, this.videoHeight, 0, 0, this.fboWidth, this.fboHeight);
-	        if (this.options.rewindable && this.counter % 2 === 0) {
+
+	        if (this.options.rewindable && this.counter % MOD_FRAMES === 0) {
 	            var data = this.bufferCtx.getImageData(0, 0, this.fboWidth, this.fboHeight);
 	            this.frames.push(data);
 	            this.totalFrames = this.frames.length;
@@ -96,6 +108,9 @@ class VideoCanvas {
 	                var f = this.frames.shift();
 	                f = null;
 	            }
+
+	            this.lastBufferCtx.clearRect(0, 0, this.windowW, this.windowH);
+	            this.lastBufferCtx.putImageData(this.frames[this.frames.length-1], 0, 0);
 	        }
         }
 
@@ -129,6 +144,14 @@ class VideoCanvas {
 
     getCanvas() {
         return this.frameBuffer;
+    }
+
+    getBuffers(){
+    	return this.buffers
+    }
+
+    getLastFrameCanvas() {
+        return this.lastFrameBuffer;
     }
 
     onResize(w, h) {
