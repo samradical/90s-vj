@@ -1,14 +1,9 @@
 {
   "name": "three-glslify-example",
   "version": "1.0.0",
-  "description": "a simple example of ThreeJS with glslify",
+  "description": "",
   "main": "index.js",
   "license": "MIT",
-  "author": {
-    "name": "Matt DesLauriers",
-    "email": "dave.des@gmail.com",
-    "url": "https://github.com/mattdesl"
-  },
   "dependencies": {
     "bluebird": "*",
     "dat-gui": "^0.5.0",
@@ -47,27 +42,10 @@
     "build": "browserify index.js | uglifyjs -cm > bundle.js"
   },
   "private": true,
-  "keywords": [
-    "glslify",
-    "three",
-    "js",
-    "threejs",
-    "glsl",
-    "glslbin",
-    "stackgl"
-  ],
   "browserify": {
     "transform": [
       "babelify",
       "glslify"
     ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/mattdesl/three-glslify-example.git"
-  },
-  "homepage": "https://github.com/mattdesl/three-glslify-example",
-  "bugs": {
-    "url": "https://github.com/mattdesl/three-glslify-example/issues"
   }
 }
