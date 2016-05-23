@@ -11,9 +11,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-require('dotenv').config({
-    path: path.join(process.cwd(), './envvars')
-});
+require('dotenv').config();
 
 require('./passport')(passport);
 
