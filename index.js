@@ -20,6 +20,9 @@ const nineties2 = "PLRQ2jIXShfkZ1EI9plH-0v8r5XqtuJSqJ";
 const ninetiesevents = "PLRQ2jIXShfkaQoRXUilaQB3CVdqprTtvH";
 const ninetiesevents2 = "PLRQ2jIXShfkY86JFB8kScjCKS3SVVoCJ6";
 
+const maddie = "PLqL0pXShgu8ddVvm7mwxaoholGrkWRxY4";
+const maddie2 = "PLqL0pXShgu8dHWVdkLgk_j2HJVu32RKGG";
+
 var appEl = document.getElementById('app')
 var threeEl = document.getElementById('three')
 var vj, renderer, recorder, recorderctx;
@@ -89,9 +92,10 @@ function init() {
         autoUpdate: false,
         mediaSources: [{
             index: 0,
-            playlists: [nineties2],
+            playlists: [maddie2],
             shufflePlaylist: true,
-            maxVideoTime: 15,
+            shuffleVideoSegments:true,
+            maxVideoTime: 300,
             quality: {
                 chooseBest: true,
                 resolution: '360p'
@@ -100,9 +104,10 @@ function init() {
             verbose: false
         }, {
             index: 1,
-            playlists: [ninetiesevents2],
+            playlists: [maddie],
             shufflePlaylist: true,
-            maxVideoTime: 15,
+            shuffleVideoSegments:true,
+            maxVideoTime: 5,
             paused: false,
             quality: {
                 chooseBest: true,
