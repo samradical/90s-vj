@@ -63,12 +63,15 @@ const ServerService = {
 				id: id,
 				...options
 			}).then((data) => {
+				console.log(")))))))))))))))))");
+				console.log(data);
+				console.log(")))))))))))))))))");
 				if (data.status === 500) {
-					reject({ message: `Failed on ${id}`, id: id });
+					reject({ message: `Failed on ${id}`, id: id , data});
 				} else {
 					let _d = data[0];
 					if (!_d) {
-						reject({ message: `Failed on ${id}`, id: id });
+						reject({ message: `Failed on ${id}`, id: id , data});
 					} else {
 						_d.videoId = id;
 						resolve(_d);

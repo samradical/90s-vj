@@ -95,7 +95,7 @@ function init() {
             playlists: [maddie2],
             shufflePlaylist: true,
             shuffleVideoSegments:true,
-            maxVideoTime: 300,
+            maxVideoTime: 700,
             quality: {
                 chooseBest: true,
                 resolution: '360p'
@@ -107,7 +107,8 @@ function init() {
             playlists: [maddie],
             shufflePlaylist: true,
             shuffleVideoSegments:true,
-            maxVideoTime: 5,
+            playAudio:false,
+            maxVideoTime: 10,
             paused: false,
             quality: {
                 chooseBest: true,

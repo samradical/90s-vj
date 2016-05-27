@@ -50,6 +50,16 @@ class MediaPlaylist {
 		});
 	}
 
+	//***************
+	//PUBLIC
+	//***************
+
+	//addAudioSource
+
+	//***************
+	//PRIVATE
+	//***************
+
 	_init() {
 		console.log(this.options.playlists);
 		if (this.options.playlists) {
@@ -58,11 +68,11 @@ class MediaPlaylist {
 						playlistId: id
 					})
 					.then(results => {
-						console.log(results);
 						this._updateYoutubeResults(results);
 						return Q.map(this.youtubeItems, (item) => {
 							let vId = Utils.getIdFromItem(item);
 							return this._getSidx(vId).catch(err => {
+								console.log(err);
 								return undefined;
 							});
 						}, {
@@ -235,13 +245,14 @@ class MediaPlaylist {
 
 	_createReferenceIndexFromResults(results) {
 		_.each(results, (item) => {
-			this.playlistUtils.mix(item.sidx, this.playlistReferenceIndex, this.options);
+			this.playlistUtils.mix(item, this.playlistReferenceIndex, this.options);
 		});
 		return this.sidxIndexReferences;
 	}
 
-	_getSidx(vId) {
-		return ServerService.getSidx(vId, this.options.quality);
+	_getSidx(vId, options = {}) {
+		options.quality = this.options.quality
+		return ServerService.getSidx(vId, options);
 	}
 }
 

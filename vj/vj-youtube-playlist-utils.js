@@ -32,10 +32,12 @@ function PlaylistUtils() {
         return _referenceIndexs;
     }
 
-    function mix(sidx, injectIndex, options = {}) {
+    function mix(item, injectIndex, options = {}) {
+        let sidx = item.sidx
         if (!sidx) {
             return _referenceIndexs;
         }
+        let videoId = item.videoId;
         let refs = sidx.references;
         let refDur = refs[0].durationSec;
         let totalTime = refDur * refs.length;
@@ -47,6 +49,12 @@ function PlaylistUtils() {
         let startIndex = 0 //Math.max(Math.floor(startTime / refDur), 0);
         let endIndex = refs.length - 1 //Math.min(Math.floor(options.maxVideoTime / refDur) + startIndex, refs.length - 1);
         let shuffleVideoSegments = options.shuffleVideoSegments
+        console.log("---------");
+        console.log('videoId', videoId);
+        console.log('injectIndex',injectIndex);
+        console.log('total',refs.length);
+        console.log('start,end',startIndex, endIndex);
+        console.log("---------");
         return _spread(sidx.references, injectIndex, {
             startIndex,
             endIndex,
